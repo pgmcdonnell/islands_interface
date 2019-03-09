@@ -73,7 +73,21 @@ function set_islands(channel, player) {
   })
 }
 
-//listen for a response
+//listen for a response to setting islands
 game_channel.on("player_set_islands", response => {
   console.log("Player set islands", response)
+})
+
+//guess coordinate
+function guess_coordinate(channel, player, row, col) {
+  var params = {"player": player, "row": row, "col": col}
+  channel.push("guess_coordinate", params)
+  .receive("error", response => {
+    console.log("Unable to guess a coordinate:" + player, response)
+  })
+}
+
+//listen for response to guessing coordinates
+game_channel.on("player_guessed_coordinate", response => {
+  console.log("Player Guessed Coordinate: ", response.result)
 })
